@@ -350,7 +350,7 @@ export default function AgentDashboardPage() {
             </div>
           </div>
 
-          <div style={{ flex: 1, overflowY: "auto" as const, display: "flex", flexDirection: "column" as const }}>
+          <div style={{ flex: 1, overflowY: "auto" as const, overflowX: "hidden" as const, display: "flex", flexDirection: "column" as const, minWidth: 0 }}>
             {filteredLogs.map((log, i) => (
               <div key={i}>
                 <div
