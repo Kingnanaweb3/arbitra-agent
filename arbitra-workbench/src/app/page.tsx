@@ -7,7 +7,7 @@ import { useCurrentAccount } from "@mysten/dapp-kit";
 import { getZkLoginAddress } from "@/lib/authStore";
 
 const demoAgents = [
-  { icon: "trending-up", color: "#60a5fa", borderColor: "#2563eb", title: "Trading Agent", desc: "DCA strategy on Deepbook with live risk guardian." },
+  { icon: "trending-up", color: "#60a5fa", borderColor: "#2563eb", title: "Trading Agent", desc: "DCA strategy on Deepbook with live risk guardian.", policyId: "0xf546ab89f2764229ac9049d7afdbaa7542ff4ea20651eb0119546f9a4bacc307" },
   { icon: "shopping-cart", color: "#f59e0b", borderColor: "#d97706", title: "E-Commerce Agent", desc: "Purchases from approved vendors within a weekly budget." },
   { icon: "building-bank", color: "#60a5fa", borderColor: "#2563eb", title: "DAO Treasury Agent", desc: "Recurring grants within a monthly allocation." },
 ];
@@ -87,7 +87,9 @@ export default function Home() {
                 <i className={`ti ti-${agent.icon}`} style={{ fontSize: 26, color: agent.color, display: "block", marginBottom: 10 }} />
                 <div style={{ fontSize: 13, fontWeight: 600, color: "#e2e8f0", marginBottom: 6 }}>{agent.title}</div>
                 <div style={{ fontSize: 11, color: "#64748b", lineHeight: 1.55, marginBottom: 12 }}>{agent.desc}</div>
-                <button style={{ fontSize: 11, width: "100%", padding: "5px 0", borderRadius: 5, cursor: "pointer", background: "transparent", border: `1px solid ${agent.borderColor}`, color: agent.color }}>
+                <button 
+                  onClick={() => agent.policyId ? router.push(`/dashboard/${agent.policyId}`) : alert("Demo coming soon")}
+                  style={{ fontSize: 11, width: "100%", padding: "5px 0", borderRadius: 5, cursor: "pointer", background: "transparent", border: `1px solid ${agent.borderColor}`, color: agent.color }}>
                   Launch Demo
                 </button>
               </div>
