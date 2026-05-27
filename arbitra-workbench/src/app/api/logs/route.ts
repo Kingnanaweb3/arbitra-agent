@@ -67,7 +67,7 @@ export async function GET(req: NextRequest) {
         productName,
         amount: Number(j.amount ?? 0) / 1_000_000,
         token,
-        target: j.policy_id ?? "",
+        target: productName || j.policy_id ?? "",
         status: e.approved ? "approved" : "rejected",
         reason: "",
         policyVersion: "v1.0",
