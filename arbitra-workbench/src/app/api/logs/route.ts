@@ -52,13 +52,19 @@ export async function GET(req: NextRequest) {
         second: "2-digit",
       });
 
-      const actionLabel = j.action_type
+      const rawLabel = j.action_type
         ? new TextDecoder().decode(new Uint8Array(j.action_type))
         : "ACTION";
 
+      // Parse "PURCHASE:Email Campaign 1000" format
+      const labelParts = rawLabel.split(":");
+      const action = labelParts[0];
+      const productName = labelParts.slice(1).join(":") || "";
+
       return {
         time,
-        action: actionLabel,
+        action,
+        productName,
         amount: Number(j.amount ?? 0) / 1_000_000,
         token,
         target: j.policy_id ?? "",

@@ -376,16 +376,24 @@ export default function AgentDashboardPage() {
                 {expandedLog === i && (
                   <div style={{ background: "#080c14", borderBottom: "1px solid #1a2234", padding: "16px 20px", display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}>
                     <div>
+                      {log.txHash && (
+                        <>
+                          <p style={{ fontSize: 11, fontWeight: 600, color: "#64748b", marginBottom: 8 }}>Transaction Hash</p>
+                          <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 12, flexWrap: "wrap" as const }}>
+                            <span style={{ fontSize: 11, color: "#60a5fa", background: "#0e1623", border: "1px solid #1e2d45", borderRadius: 4, padding: "3px 8px", wordBreak: "break-all" as const }}>{log.txHash}</span>
+                            <button onClick={() => { try { navigator.clipboard.writeText(log.txHash); } catch(e) { const el = document.createElement('textarea'); el.value = log.txHash; document.body.appendChild(el); el.select(); document.execCommand('copy'); document.body.removeChild(el); } }} style={{ background: "none", border: "none", cursor: "pointer", color: "#64748b", flexShrink: 0 }}>
+                              <i className="ti ti-copy" style={{ fontSize: 12 }} />
+                            </button>
+                            <a href={`https://suiscan.xyz/testnet/tx/${log.txHash}`} target="_blank" rel="noreferrer"
+                              style={{ fontSize: 11, color: "#60a5fa", textDecoration: "none", display: "flex", alignItems: "center", gap: 4, flexShrink: 0 }}>
+                              Sui Explorer <i className="ti ti-arrow-up-right" style={{ fontSize: 10 }} />
+                            </a>
+                          </div>
+                        </>
+                      )}
                       <p style={{ fontSize: 11, fontWeight: 600, color: "#64748b", marginBottom: 8 }}>PTB Transaction Hash</p>
                       <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 12 }}>
-                        <span style={{ fontSize: 11, color: "#60a5fa", background: "#0e1623", border: "1px solid #1e2d45", borderRadius: 4, padding: "3px 8px" }}>0xabc...def</span>
-                        <button onClick={() => { try { navigator.clipboard.writeText('0xabc...def'); } catch(e) { const el = document.createElement('textarea'); el.value = '0xabc...def'; document.body.appendChild(el); el.select(); document.execCommand('copy'); document.body.removeChild(el); } }} style={{ background: "none", border: "none", cursor: "pointer", color: "#64748b" }}>
-                          <i className="ti ti-copy" style={{ fontSize: 12 }} />
-                        </button>
-                        <a href={`https://suiexplorer.com/txblock/0xabc?network=testnet`} target="_blank" rel="noreferrer"
-                          style={{ fontSize: 11, color: "#60a5fa", textDecoration: "none", display: "flex", alignItems: "center", gap: 4 }}>
-                          Sui Explorer <i className="ti ti-arrow-up-right" style={{ fontSize: 10 }} />
-                        </a>
+                        <span style={{ fontSize: 11, color: "#475569", fontSize: 10 }}>On-chain enforcement tx — see above</span>
                       </div>
                       <p style={{ fontSize: 11, fontWeight: 600, color: "#64748b", marginBottom: 8 }}>Actions bundled in this PTB</p>
                       {["Policy check", "Budget validation", "Action execution", "Activity log write", "Budget decrement"].map(a => (
@@ -399,11 +407,17 @@ export default function AgentDashboardPage() {
                       <p style={{ fontSize: 11, fontWeight: 600, color: "#64748b", marginBottom: 8 }}>Agent Endpoint Called</p>
                       <a href={agent.endpointUrl || "#"} style={{ fontSize: 11, color: "#60a5fa", textDecoration: "none", display: "block", marginBottom: 12 }}>{agent.endpointUrl || "Arbitra Demo Agent"}</a>
                       <p style={{ fontSize: 11, fontWeight: 600, color: "#64748b", marginBottom: 8 }}>Agent Response Received</p>
+                      {log.target && (
+                        <div style={{ marginBottom: 8, padding: "6px 10px", background: "#0e1623", border: "1px solid #1e2d45", borderRadius: 6 }}>
+                          <span style={{ fontSize: 11, color: "#64748b" }}>Description: </span>
+                          <span style={{ fontSize: 11, color: "#e2e8f0", fontWeight: 500 }}>{log.target}</span>
+                        </div>
+                      )}
                       <pre style={{ fontSize: 10, color: "#94a3b8", background: "#0e1623", border: "1px solid #1e2d45", borderRadius: 6, padding: "8px", margin: 0, lineHeight: 1.5, fontFamily: "monospace" }}>
 {`{
   "action": "${log.action.toLowerCase()}",
   "amount": ${log.amount},
-  "target": "${log.target}"
+  "policyId": "${log.target}"
 }`}
                       </pre>
                       <div style={{ marginTop: 12, display: "flex", alignItems: "center", gap: 6 }}>

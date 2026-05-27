@@ -43,7 +43,9 @@ export async function POST(req: NextRequest) {
     const scopeCheck = scope === "deepbook" ? SCOPE_DEEPBOOK : SCOPE_CUSTOM;
 
     // Call validate_action on-chain — this enforces policy and emits events
-    const actionBytes = Array.from(new TextEncoder().encode(action));
+    // Include product/vendor info in action label for on-chain tracking
+    const actionLabel = body.product ? `${action}:${body.product}` : action;
+    const actionBytes = Array.from(new TextEncoder().encode(actionLabel));
     tx.moveCall({
       target: `${PACKAGE_ID}::policy_object::validate_action`,
       arguments: [
