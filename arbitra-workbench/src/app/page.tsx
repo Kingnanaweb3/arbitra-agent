@@ -8,7 +8,7 @@ import { getZkLoginAddress } from "@/lib/authStore";
 
 const demoAgents = [
   { icon: "trending-up", color: "#60a5fa", borderColor: "#2563eb", title: "Trading Agent", desc: "DCA strategy on Deepbook with live risk guardian.", policyId: "0xf546ab89f2764229ac9049d7afdbaa7542ff4ea20651eb0119546f9a4bacc307" },
-  { icon: "shopping-cart", color: "#f59e0b", borderColor: "#d97706", title: "E-Commerce Agent", desc: "Purchases from approved vendors within a weekly budget." },
+  { icon: "shopping-cart", color: "#f59e0b", borderColor: "#d97706", title: "E-Commerce Agent", desc: "Purchases from approved vendors within a weekly budget.", policyId: "0x58dfe5c0324a75f733e6fb262a9f499235fe39b1954819df6f986de2d8dd5115" },
   { icon: "building-bank", color: "#60a5fa", borderColor: "#2563eb", title: "DAO Treasury Agent", desc: "Recurring grants within a monthly allocation." },
 ];
 
