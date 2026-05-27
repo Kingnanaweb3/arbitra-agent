@@ -27,6 +27,31 @@ export async function POST(req: NextRequest) {
       });
     }
 
+    // Check agent wallet balance before policy enforcement
+    const walletAddress = body.walletAddress;
+    if (walletAddress && body.token) {
+      try {
+        const USDC_TYPE = "0xa1ec7fc00a6f40db9693ad1415d0c193ad3906494428cf252621037bd7117e29::usdc::USDC";
+        const balanceRes = await suiClient.getBalance({
+          owner: walletAddress,
+          coinType: USDC_TYPE,
+        });
+        const walletBalance = Number(balanceRes.totalBalance) / 1_000_000;
+        console.log(`[Arbitra API] Wallet balance check: ${walletBalance} USDC | Requested: ${amount} USDC`);
+        if (walletBalance < amount) {
+          return NextResponse.json({
+            approved: false,
+            rejectionReason: `Insufficient wallet balance: ${walletBalance} USDC available, ${amount} USDC requested`,
+            timestamp: Date.now(),
+          });
+        }
+      } catch (e: any) {
+        console.log(`[Arbitra API] Balance check failed: ${e.message}`);
+      }
+    }
+
+
+
     if (!PRIVATE_KEY) {
       return NextResponse.json({
         approved: false,
