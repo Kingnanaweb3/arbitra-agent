@@ -2,6 +2,8 @@
 
 import { useState } from "react";
 import { WizardState, defaultWizardState, AgentType, templateConfigs } from "@/lib/wizardState";
+import { useSearchParams } from "next/navigation";
+import { Suspense } from "react";
 import Step1AgentType from "./Step1AgentType";
 import { agentActionDefaults } from "@/lib/wizardState";
 import Step2Identity from "./Step2Identity";
@@ -21,8 +23,31 @@ interface WizardShellProps {
   onExit: () => void;
 }
 
-export default function WizardShell({ onExit }: WizardShellProps) {
-  const [state, setState] = useState<WizardState>(defaultWizardState);
+function WizardShellInner({ onExit }: WizardShellProps) {
+  const searchParams = useSearchParams();
+  const [state, setState] = useState<WizardState>(() => {
+    const base = { ...defaultWizardState };
+    if (typeof window === "undefined") return base;
+    const type = searchParams.get("type") as AgentType | null;
+    const template = searchParams.get("template");
+    const budget = searchParams.get("budget");
+    const token = searchParams.get("token");
+    const riskCeiling = searchParams.get("riskCeiling");
+    const maxTx = searchParams.get("maxTx");
+    const scope = searchParams.get("scope");
+    const expiry = searchParams.get("expiry");
+    const slippageGuardBps = searchParams.get("slippageGuardBps");
+    if (type) base.agentType = type;
+    if (budget) base.budget = Number(budget);
+    if (token) base.token = token;
+    if (riskCeiling) base.riskCeiling = Number(riskCeiling);
+    if (maxTx) base.maxSingleTx = Number(maxTx);
+    if (scope) base.scope = scope;
+    if (expiry) base.expiry = expiry;
+    if (slippageGuardBps) base.slippageGuardBps = Number(slippageGuardBps);
+    if (template) base.template = template;
+    return base;
+  });
 
   const updateState = (updates: Partial<WizardState>) => {
     setState((prev) => ({ ...prev, ...updates }));
@@ -145,5 +170,13 @@ export default function WizardShell({ onExit }: WizardShellProps) {
         />
       )}
     </div>
+  );
+}
+
+export default function WizardShell({ onExit }: WizardShellProps) {
+  return (
+    <Suspense fallback={null}>
+      <WizardShellInner onExit={onExit} />
+    </Suspense>
   );
 }
