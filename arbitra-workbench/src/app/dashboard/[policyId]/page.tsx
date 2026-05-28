@@ -586,7 +586,23 @@ export default function AgentDashboardPage() {
                 {conf.quickActions.map(action => (
                   <button
                     key={action.action}
-                    onClick={action.action === "stress_test" ? handleStressTest : action.action === "update_risk" ? () => setShowUpdateRisk(true) : action.action === "pause" ? () => { setIsPaused(!isPaused); setLogs(prev => [{ time: new Date().toLocaleTimeString('en-US', { hour12: false, hour: '2-digit', minute: '2-digit', second: '2-digit' }), action: isPaused ? 'RESUMED' : 'PAUSED', amount: 0, token: agent?.token ?? 'USDC', target: isPaused ? 'Manual resume' : 'Manual pause', status: isPaused ? 'approved' : 'paused', reason: isPaused ? 'Resumed by owner' : 'Paused by owner', policyVersion: 'v1.1' }, ...prev]); } : undefined}
+                    onClick={action.action === "stress_test" ? handleStressTest : action.action === "update_risk" ? () => setShowUpdateRisk(true) : action.action === "pause" ? async () => {
+                        const newPaused = !isPaused;
+                        try {
+                          const res = await fetch("/api/policy", {
+                            method: "POST",
+                            headers: { "Content-Type": "application/json" },
+                            body: JSON.stringify({ action: newPaused ? "pause" : "resume", policyId, riskScore: newPaused ? 95 : 0 }),
+                          });
+                          const data = await res.json();
+                          if (data.success) {
+                            setIsPaused(newPaused);
+                            setLogs(prev => [{ time: new Date().toLocaleTimeString('en-US', { hour12: false, hour: '2-digit', minute: '2-digit', second: '2-digit' }), action: newPaused ? 'PAUSED' : 'RESUMED', amount: 0, token: agent?.token ?? 'USDC', target: newPaused ? 'Manual pause' : 'Manual resume', status: newPaused ? 'paused' : 'approved', reason: newPaused ? 'Paused by owner' : 'Resumed by owner', policyVersion: 'v1.1', txHash: data.txDigest }, ...prev]);
+                          } else {
+                            alert(`Failed: ${data.error}`);
+                          }
+                        } catch(e: any) { alert(`Error: ${e.message}`); }
+                      } : undefined}
                     disabled={isRevoked}
                     style={{ display: "flex", alignItems: "center", gap: 8, background: "transparent", border: "1px solid #1e2d45", color: action.color ?? "#94a3b8", padding: "7px 12px", borderRadius: 7, fontSize: 12, cursor: "pointer", fontFamily: "'DM Sans', sans-serif', textAlign: 'left" }}
                   >
@@ -757,7 +773,24 @@ export default function AgentDashboardPage() {
                 style={{ flex: 1, padding: "10px 0", background: "transparent", border: "1px solid #1e2d45", color: "#94a3b8", borderRadius: 8, fontSize: 13, cursor: "pointer", fontFamily: "'DM Sans', sans-serif" }}>
                 Cancel
               </button>
-              <button onClick={() => { setIsRevoked(true); setShowRevokeConfirm(false); setStressMessage("Agent revoked. Policy sealed on-chain. Activity log closed."); }}
+              <button onClick={async () => {
+                try {
+                  const res = await fetch("/api/policy", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ action: "revoke", policyId, capId: agent?.capId || policyId }),
+                  });
+                  const data = await res.json();
+                  if (data.success) {
+                    setIsRevoked(true);
+                    setShowRevokeConfirm(false);
+                    setStressMessage(`Agent revoked on-chain. TX: ${data.txDigest}`);
+                  } else {
+                    alert(`Revoke failed: ${data.error}`);
+                    setShowRevokeConfirm(false);
+                  }
+                } catch(e: any) { alert(`Error: ${e.message}`); setShowRevokeConfirm(false); }
+              }}
                 style={{ flex: 1, padding: "10px 0", background: "#b91c1c", border: "none", color: "#fff", borderRadius: 8, fontSize: 13, fontWeight: 500, cursor: "pointer", fontFamily: "'DM Sans', sans-serif" }}>
                 Revoke Agent
               </button>
