@@ -236,7 +236,7 @@ export default function AgentDashboardPage() {
             </span>
           </div>
 
-          {conf.warningButton && (
+          {conf.warningButton && (stats.budgetUsedPercent ?? 0) > 80 && (
             <button
               onClick={isTrading ? handleStressTest : undefined}
               disabled={isStressTesting || isPaused || isRevoked}
@@ -291,7 +291,7 @@ export default function AgentDashboardPage() {
                    field.key === "tradingPair" ? agent.tradingPair :
                    field.key === "scope" ? agent.scope :
                    field.key === "expiry" ? (() => { if (agent.expiry === "0") return "Never"; const h = Number(agent.expiry); const deployed = agent.deployedAt; const remaining = Math.max(0, (deployed + h * 3600000) - Date.now()); const hrs = Math.floor(remaining / 3600000); const mins = Math.floor((remaining % 3600000) / 60000); return remaining > 0 ? `${hrs}h ${mins}m remaining` : "Expired"; })() :
-                   field.key === "splitAddresses" ? "3 vendors" :
+                   field.key === "splitAddresses" ? (agent.endpointUrl ? "1 vendor" : "—") :
                    field.key === "recipientWhitelist" ? "3 approved" :
                    field.key === "receiptLogging" ? "On" :
                    field.key === "paymentSchedule" ? "On-demand" :
