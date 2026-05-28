@@ -9,7 +9,7 @@ import { getZkLoginAddress } from "@/lib/authStore";
 const demoAgents = [
   { icon: "trending-up", color: "#60a5fa", borderColor: "#2563eb", title: "Trading Agent", desc: "DCA strategy on Deepbook with live risk guardian.", policyId: "0xf546ab89f2764229ac9049d7afdbaa7542ff4ea20651eb0119546f9a4bacc307" },
   { icon: "shopping-cart", color: "#f59e0b", borderColor: "#d97706", title: "E-Commerce Agent", desc: "Purchases from approved vendors within a weekly budget.", policyId: "0x58dfe5c0324a75f733e6fb262a9f499235fe39b1954819df6f986de2d8dd5115" },
-  { icon: "building-bank", color: "#60a5fa", borderColor: "#2563eb", title: "DAO Treasury Agent", desc: "Recurring grants within a monthly allocation." },
+  { icon: "building-bank", color: "#60a5fa", borderColor: "#2563eb", title: "DAO Treasury Agent", desc: "Recurring grants within a monthly allocation.", comingSoon: true },
 ];
 
 const trustItems = [
@@ -88,9 +88,9 @@ export default function Home() {
                 <div style={{ fontSize: 13, fontWeight: 600, color: "#e2e8f0", marginBottom: 6 }}>{agent.title}</div>
                 <div style={{ fontSize: 11, color: "#64748b", lineHeight: 1.55, marginBottom: 12 }}>{agent.desc}</div>
                 <button 
-                  onClick={() => agent.policyId ? router.push(`/dashboard/${agent.policyId}`) : alert("Demo coming soon")}
-                  style={{ fontSize: 11, width: "100%", padding: "5px 0", borderRadius: 5, cursor: "pointer", background: "transparent", border: `1px solid ${agent.borderColor}`, color: agent.color }}>
-                  Launch Demo
+                  onClick={() => (agent as any).comingSoon ? null : agent.policyId ? router.push(`/dashboard/${agent.policyId}`) : null}
+                  style={{ fontSize: 11, width: "100%", padding: "5px 0", borderRadius: 5, cursor: (agent as any).comingSoon ? "default" : "pointer", background: "transparent", border: `1px solid ${(agent as any).comingSoon ? "#334155" : agent.borderColor}`, color: (agent as any).comingSoon ? "#475569" : agent.color }}>
+                  {(agent as any).comingSoon ? "Coming Soon" : "Launch Demo"}
                 </button>
               </div>
             ))}
