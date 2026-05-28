@@ -606,8 +606,8 @@ export default function AgentDashboardPage() {
                     disabled={isRevoked}
                     style={{ display: "flex", alignItems: "center", gap: 8, background: "transparent", border: "1px solid #1e2d45", color: action.color ?? "#94a3b8", padding: "7px 12px", borderRadius: 7, fontSize: 12, cursor: "pointer", fontFamily: "'DM Sans', sans-serif', textAlign: 'left" }}
                   >
-                    <i className={`ti ${action.icon}`} style={{ fontSize: 13 }} />
-                    {action.label}
+                    <i className={`ti ${action.action === "pause" ? (isPaused ? "ti-player-play" : "ti-player-pause") : action.icon}`} style={{ fontSize: 13 }} />
+                    {action.action === "pause" ? (isPaused ? "Resume Agent" : "Pause Agent") : action.label}
                   </button>
                 ))}
               </div>
