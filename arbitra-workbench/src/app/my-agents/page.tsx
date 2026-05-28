@@ -121,7 +121,7 @@ export default function MyAgentsPage() {
                         <i className="ti ti-copy" style={{ fontSize: 12 }} />
                       </button>
                       
-                        href={`https://suiscan.xyz/testnet/object/${agent.policyId}`}
+                      <a                        href={`https://suiscan.xyz/testnet/object/${agent.policyId}`}
                         target="_blank"
                         rel="noreferrer"
                         onClick={e => e.stopPropagation()}
@@ -155,7 +155,7 @@ export default function MyAgentsPage() {
                       View Dashboard
                     </button>
                     
-                      href={`https://suiscan.xyz/testnet/object/${agent.policyId}`}
+                    <a                      href={`https://suiscan.xyz/testnet/object/${agent.policyId}`}
                       target="_blank"
                       rel="noreferrer"
                       onClick={e => e.stopPropagation()}
