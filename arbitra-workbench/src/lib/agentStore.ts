@@ -48,3 +48,8 @@ export function removeAgent(policyId: string) {
   const filtered = getAgents().filter(a => a.policyId !== policyId);
   localStorage.setItem("arbitra_agents", JSON.stringify(filtered));
 }
+
+export function clearAgents() {
+  if (typeof window === "undefined") return;
+  localStorage.removeItem("arbitra_agents");
+}
