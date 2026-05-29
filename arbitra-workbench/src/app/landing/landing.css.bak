@@ -1,0 +1,126 @@
+/* ── MOBILE (< 640px) ── */
+@media (max-width: 640px) {
+
+  /* Nav */
+  #desktop-nav { display: none !important; }
+  #desktop-cta { display: none !important; }
+  #hamburger-btn { display: block !important; }
+
+  /* Hero */
+  .hero-section {
+    padding: 100px 20px 320px !important;
+  }
+  .hero-arc {
+    width: 360px !important;
+    height: 360px !important;
+  }
+  .hero-arc-inner {
+    width: 280px !important;
+    height: 280px !important;
+  }
+
+  /* Grids → single column */
+  .grid-3, .grid-4, .grid-6 {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Cards row (feature cards absolute) */
+  .feature-cards-abs {
+    position: relative !important;
+    bottom: auto !important;
+    left: auto !important;
+    transform: none !important;
+    padding: 0 20px !important;
+    margin-top: 32px !important;
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Section padding */
+  .section-pad {
+    padding: 60px 20px !important;
+  }
+
+  /* Architecture flow → vertical */
+  .arch-flow {
+    flex-direction: column !important;
+    align-items: center !important;
+  }
+  .arch-arrow {
+    transform: rotate(90deg);
+  }
+
+  /* Process grid */
+  .process-grid {
+    grid-template-columns: 1fr !important;
+  }
+  .process-arrow {
+    display: none !important;
+  }
+
+  /* Bottom bar pills */
+  .bottom-bar {
+    flex-direction: column !important;
+    gap: 12px !important;
+    border-radius: 16px !important;
+    padding: 20px !important;
+  }
+
+  /* Footer */
+  .footer-top {
+    flex-direction: column !important;
+  }
+  .footer-links {
+    flex-direction: column !important;
+    gap: 32px !important;
+  }
+
+  /* Code block font */
+  .code-block {
+    font-size: 11px !important;
+    padding: 16px !important;
+  }
+
+  /* Headline sizes */
+  h1, h2 {
+    word-break: break-word;
+  }
+}
+
+/* ── TABLET (641px – 1024px) ── */
+@media (min-width: 641px) and (max-width: 1024px) {
+
+  #desktop-nav { display: none !important; }
+  #desktop-cta { display: none !important; }
+  #hamburger-btn { display: block !important; }
+
+  .grid-3, .grid-6 {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+  .grid-4 {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+  .process-grid {
+    grid-template-columns: 1fr !important;
+  }
+  .process-arrow {
+    display: none !important;
+  }
+  .section-pad {
+    padding: 80px 32px !important;
+  }
+  .hero-section {
+    padding: 120px 32px 320px !important;
+  }
+  .arch-flow {
+    flex-wrap: wrap !important;
+    justify-content: center !important;
+  }
+  .footer-links {
+    gap: 24px !important;
+  }
+}
+
+/* ── DESKTOP (> 1024px) ── */
+@media (min-width: 1025px) {
+  #hamburger-btn { display: none !important; }
+}
