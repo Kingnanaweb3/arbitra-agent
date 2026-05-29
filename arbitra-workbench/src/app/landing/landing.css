@@ -1,6 +1,5 @@
 /* ── MOBILE (< 640px) ── */
 @media (max-width: 640px) {
-
   /* Nav */
   #desktop-nav { display: none !important; }
   #desktop-cta { display: none !important; }
@@ -8,23 +7,40 @@
 
   /* Hero */
   .hero-section {
-    padding: 100px 20px 320px !important;
-  }
-  .hero-arc {
-    width: 360px !important;
-    height: 360px !important;
-  }
-  .hero-arc-inner {
-    width: 280px !important;
-    height: 280px !important;
+    padding: 120px 20px 60px !important;
+    min-height: auto !important;
+    display: flex !important;
+    flex-direction: column !important;
   }
 
-  /* Grids → single column */
-  .grid-3, .grid-4, .grid-6 {
+  /* Hero arc — fit mobile screen, same half-circle crop effect */
+  .hero-section > div:nth-child(2) {
+    display: block !important;
+    width: 110vw !important;
+    height: 110vw !important;
+    transform: translate(-50%, -72%) !important;
+  }
+  .hero-section > div:nth-child(3) {
+    display: block !important;
+    width: 86vw !important;
+    height: 86vw !important;
+    transform: translate(-50%, -72%) !important;
+  }
+
+  /* Feature cards — static flow after hero content */
+  .feature-cards-abs {
+    position: relative !important;
+    bottom: auto !important;
+    left: auto !important;
+    transform: none !important;
+    padding: 0 !important;
+    margin-top: 40px !important;
     grid-template-columns: 1fr !important;
+    width: 100% !important;
+    max-width: 100% !important;
   }
 
-  /* Cards row (feature cards absolute) */
+  /* Feature cards — pull out of absolute, stack vertically */
   .feature-cards-abs {
     position: relative !important;
     bottom: auto !important;
@@ -33,11 +49,24 @@
     padding: 0 20px !important;
     margin-top: 32px !important;
     grid-template-columns: 1fr !important;
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  /* Grids → single column */
+  .grid-3, .grid-4, .grid-6 {
+    grid-template-columns: 1fr !important;
   }
 
   /* Section padding */
   .section-pad {
     padding: 60px 20px !important;
+  }
+
+  /* All sections horizontal padding */
+  section {
+    padding-left: 20px !important;
+    padding-right: 20px !important;
   }
 
   /* Architecture flow → vertical */
@@ -88,7 +117,6 @@
 
 /* ── TABLET (641px – 1024px) ── */
 @media (min-width: 641px) and (max-width: 1024px) {
-
   #desktop-nav { display: none !important; }
   #desktop-cta { display: none !important; }
   #hamburger-btn { display: block !important; }
@@ -109,7 +137,7 @@
     padding: 80px 32px !important;
   }
   .hero-section {
-    padding: 120px 32px 320px !important;
+    padding: 120px 32px 360px !important;
   }
   .arch-flow {
     flex-wrap: wrap !important;
@@ -117,6 +145,16 @@
   }
   .footer-links {
     gap: 24px !important;
+  }
+
+  section {
+    padding-left: 32px !important;
+    padding-right: 32px !important;
+  }
+
+  .feature-cards-abs {
+    grid-template-columns: 1fr !important;
+    padding: 0 32px !important;
   }
 }
 

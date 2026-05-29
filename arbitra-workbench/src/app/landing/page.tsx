@@ -34,7 +34,7 @@ export default function LandingPage() {
 
       
 
-      <section className="dot-grid" style={{
+      <section className="dot-grid hero-section" style={{
         position: 'relative', minHeight: '100vh',
         display: 'flex', flexDirection: 'column',
         alignItems: 'center', justifyContent: 'center',
@@ -103,7 +103,7 @@ export default function LandingPage() {
           display: 'grid',
           gridTemplateColumns: 'repeat(3, 1fr)',
           gap: '20px',
-        }}>
+        }} className="feature-cards-abs">
           {[
             { icon: 'cube', title: 'Trustless by Design', body: "Policy rules live on Sui's VM — not in a database, not in an API. The agent physically cannot violate them." },
             { icon: 'shield', title: 'Always Auditable', body: 'Every action, every risk trigger, every pause — written on-chain permanently. Nothing hidden.' },
@@ -341,7 +341,7 @@ export default function LandingPage() {
             From zero to on-chain policy enforcement in under 3 minutes.
           </p>
 
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr auto 1fr auto 1fr', gap: '0', alignItems: 'start' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr auto 1fr auto 1fr', gap: '0', alignItems: 'start' }} className="process-grid">
 
             {/* Card 1 */}
             <div style={{ background: '#0d1117', border: '1px solid #1e2d45', borderRadius: '16px', padding: '28px 24px', display: 'flex', flexDirection: 'column', gap: '20px', textAlign: 'left' }}>
@@ -449,7 +449,7 @@ export default function LandingPage() {
             display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0',
             background: 'rgba(255,255,255,0.03)', border: '1px solid #1e2d45',
             borderRadius: '100px', padding: '14px 32px',
-          }}>
+          }} className="bottom-bar">
             {[
               { icon: '🛡', text: 'No code changes to your agent.' },
               { text: 'No trust assumptions.' },
@@ -1091,7 +1091,7 @@ export default function LandingPage() {
       }}>
         <div style={{ maxWidth: '1100px', margin: '0 auto' }}>
           {/* Top row */}
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '48px', flexWrap: 'wrap', gap: '32px' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '48px', flexWrap: 'wrap', gap: '32px' }} className="footer-top">
             
             {/* Logo + tagline */}
             <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
@@ -1105,7 +1105,7 @@ export default function LandingPage() {
             </div>
 
             {/* Nav links */}
-            <div style={{ display: 'flex', gap: '48px', flexWrap: 'wrap' }}>
+            <div style={{ display: 'flex', gap: '48px', flexWrap: 'wrap' }} className="footer-links">
               <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
                 <span style={{ fontSize: '12px', fontWeight: 600, color: '#4b5563', letterSpacing: '0.08em', textTransform: 'uppercase' }}>Product</span>
                 <a href="/new-agent" style={{ fontSize: '14px', color: '#94a3b8', textDecoration: 'none' }}>Deploy Agent</a>
